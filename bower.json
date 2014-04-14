@@ -1,0 +1,25 @@
+{
+  "name": "actinium",
+  "version": "0.0.0",
+  "authors": [
+    "Ayumu Sato <mail@ayumusato.com>"
+  ],
+  "homepage": "https://github.com/ahomu/Actinium",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "karma.conf.js"
+  ],
+  "dependencies": {
+    "angular": "~1.2.14",
+    "zepto": "~1.1.3"
+  },
+  "devDependencies": {
+    "expect": "~0.3.1",
+    "angular-mocks": "~1.2.14"
+  }
+}

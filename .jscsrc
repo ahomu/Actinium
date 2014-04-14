@@ -1,0 +1,68 @@
+{
+  "requireCurlyBraces": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "try",
+    "catch"
+  ],
+  "requireSpaceAfterKeywords": [
+    "if",
+    "else",
+    "for",
+    "while",
+    "do",
+    "switch",
+    "return",
+    "try",
+    "catch"
+  ],
+
+  "disallowLeftStickedOperators": ["?", "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+  "disallowRightStickedOperators": ["?", "+", "/", "*", ":", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<="],
+  "requireRightStickedOperators": ["!"],
+  "requireLeftStickedOperators": [","],
+  "disallowSpaceBeforePostfixUnaryOperators": ["++", "--"],
+  "disallowSpaceAfterPrefixUnaryOperators": ["++", "--", "+", "-", "~", "!"],
+
+  "disallowImplicitTypeConversion": ["string"],
+  "disallowKeywords": ["with", "eval"],
+  "disallowMultipleLineBreaks": true,
+  "disallowMultipleLineStrings": true,
+  "disallowKeywordsOnNewLine": ["else"],
+  "disallowMixedSpacesAndTabs": true,
+  "disallowTrailingWhitespace": true,
+  "disallowEmptyBlocks": true,
+  "disallowQuotedKeysInObjects": "allButReserved",
+  "disallowYodaConditions": true,
+
+  "requireCamelCaseOrUpperCaseIdentifiers": true,
+  "requireCapitalizedConstructors": true,
+  "requireAlignedObjectValues": "skipWithLineBreak",
+  "requireCommaBeforeLineBreak": true,
+  "requireBlocksOnNewline": true,
+  "requireLineFeedAtFileEnd": true,
+  "requireParenthesesAroundIIFE": true,
+  "requireMultipleVarDecl": true,
+
+  "safeContextKeyword": true,
+  "excludeFiles": ["test/data/**"],
+
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningCurlyBrace": true
+  },
+  "disallowSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true
+  },
+
+  "validateJSDoc": {
+    "checkParamNames": false,
+    "requireParamTypes": true
+  },
+
+  "validateLineBreaks": "LF",
+  "validateIndentation": 2,
+  "validateQuoteMarks": "'"
+}
