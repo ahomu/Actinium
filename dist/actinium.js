@@ -1,4 +1,4 @@
-/*! actinium - v0.0.4 ( 2014-04-16 ) -  */
+/*! actinium - v0.0.5 ( 2014-04-16 ) -  */
 ;(function(window) {
 
 "use strict";
@@ -14,23 +14,38 @@ angular.module('actinium.providers.bundle', [])
  **/
 .factory('bundleFactory', function() {
 
+  /**
+   * @param {Object} args
+   * @constructor
+   */
   function Bundle(args) {
     this.args = args || {};
   }
 
+  /**
+   * @param {Object} args
+   */
   Bundle.prototype.save = function(args) {
     angular.copy(args, this.args);
   };
 
+  /**
+   * @param {Object} dest
+   */
   Bundle.prototype.restore = function(dest) {
     angular.copy(this.args, dest);
   };
 
+  /**
+   */
   Bundle.prototype.drop = function() {
     this.args = {};
   };
 
   return {
+    /**
+     * @param {Object} args
+     */
     create : function(args) {
       return new Bundle(args);
     }
@@ -65,6 +80,10 @@ angular.module('actinium.providers.config', [])
  * @name actinium.providers.storage
  **/
 angular.module('actinium.providers.storage', [])
+/**
+ * @ngdoc factory
+ * @name actinium.providers.storage:storageImplements
+ **/
 .factory('storageImplements', function() {
 
   /**
@@ -118,6 +137,11 @@ angular.module('actinium.providers.storage', [])
   };
 
   return {
+    /**
+     * @param {String} identifier
+     * @param {Storage} storage
+     * @returns {actinium.providers.storage.Storage}
+     */
     create : function(identifier, storage) {
       return new Storage(identifier, storage);
     }
@@ -164,8 +188,7 @@ angular.module('actinium.providers.storage', [])
  * @ngdoc module
  * @name actinium.components.ajax
  **/
-angular
-.module('actinium.components.ajax', [])
+angular.module('actinium.components.ajax', [])
 /**
  * @ngdoc service
  * @name actinium.components.ajax:ajaxProvider
@@ -230,9 +253,10 @@ angular
   }];
 });
 
+angular.module('actinium.components.ajax')
 /**
  * @ngdoc directive
- * @name actinium.components.ajax:ajax
+ * @name actinium.components.ajax:acAjax
  * @restrict E
  *
  * @element ANY
@@ -255,7 +279,7 @@ angular
  * Polymer-Ajaxに触発された
  *
  * ```html
- * <ajax
+ * <ac-ajax
  *   auto="true"
  *   handler="__noop__"
  *   response="articles"
@@ -263,9 +287,7 @@ angular
  *   url="/api/my/article/list" />
  * ```
  **/
-angular
-.module('actinium.components.ajax')
-.directive('ajax', ['$http', 'ajax', function($http, ajax) {
+.directive('acAjax', ['$http', 'ajax', function($http, ajax) {
   var _directive =  {
     restrict : 'E',
     replace  : true,
@@ -334,13 +356,12 @@ angular
  * @ngdoc module
  * @name actinium.components.dimension
  **/
-angular
-  .module('actinium.components.dimension', [
-  ]);
+angular.module('actinium.components.dimension', []);
 
+angular.module('actinium.components.dimension')
 /**
  * @ngdoc directive
- * @name actinium.components.dimension:fixedSticky
+ * @name actinium.components.dimension:acFixedSticky
  * @restrict A
  *
  * @element ANY
@@ -354,12 +375,10 @@ angular
  * すごい昔のjQueryプラギーン移植。初期化時の絶対座標を反映しつつ、該当要素をbody直下の子要素としてfixedします。
  *
  * ```html
- * <div id="fixed-sidebar" fixed-sticky>
+ * <div id="fixed-sidebar" ac-fixed-sticky>
  * ```
  **/
-angular
-.module('actinium.components.dimension')
-.directive('fixedSticky', ['$window', '$document', function($window, $document) {
+.directive('acFixedSticky', ['$window', '$document', function($window, $document) {
 
   var _directive =  {
     restrict : 'A',
@@ -486,22 +505,12 @@ angular
  *
  * TODO gaのスクリプト呼び出しもモジュール化したい
  **/
-angular
-  .module('actinium.components.ga', [
-  ]);
+angular.module('actinium.components.ga', []);
 
-/**
- * @ngdoc service
- * @name actinium.components.ga:ga
- * @requires $window
- **/
-angular.module('actinium.components.ga').service('ga', ['$window', function($window) {
-  return $window[$window.GoogleAnalyticsObject];
-}]);
-
+angular.module('actinium.components.ga')
 /**
  * @ngdoc directive
- * @name actinium.components.ga:gaTrackEvent
+ * @name actinium.components.ga:acGaEvent
  * @restrict A
  *
  * @element ANY
@@ -518,10 +527,10 @@ angular.module('actinium.components.ga').service('ga', ['$window', function($win
  * 該当要素のclickイベントをEventとしてGoogle Analyticsに計上します。
  *
  * ```html
- * <button ga-track-event category="video" action="play" label="Let's Play"></button>
+ * <button ac-ga-evt category="video" action="play" label="Let's Play"></button>
  * ```
  **/
-angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', function(ga) {
+.directive('acGaEvent', ['ga', function(ga) {
 
   var _directive =  {
     restrict : 'A',
@@ -557,9 +566,20 @@ angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', functi
   return _directive;
 }]);
 
+angular.module('actinium.components.ga')
+/**
+ * @ngdoc service
+ * @name actinium.components.ga:ga
+ * @requires $window
+ **/
+.service('ga', ['$window', function($window) {
+  return $window[$window.GoogleAnalyticsObject];
+}]);
+
+angular.module('actinium.components.ga')
 /**
  * @ngdoc directive
- * @name actinium.components.ga:gaTrackPv
+ * @name actinium.components.ga:acGaPv
  * @restrict A
  *
  * @element ANY
@@ -574,10 +594,10 @@ angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', functi
  * 該当要素のclickイベントをPageViewとしてGoogle Analyticsに計上します。
  *
  * ```html
- * <button ga-track-pv page="/virtual" title="Virtual PV"></button>
+ * <button ac-ga-pv page="/virtual" title="Virtual PV"></button>
  * ```
  **/
-angular.module('actinium.components.ga').directive('gaTrackPv', ['ga', function(ga) {
+.directive('acGaPv', ['ga', function(ga) {
 
   var _directive =  {
     restrict : 'A',
@@ -612,16 +632,15 @@ angular.module('actinium.components.ga').directive('gaTrackPv', ['ga', function(
  * @ngdoc module
  * @name actinium.components.touch
  **/
-angular
-  .module('actinium.components.touch', [
-  ]);
+angular.module('actinium.components.touch', []);
 
+angular.module('actinium.components.touch')
 /**
  * @ngdoc service
  * @name actinium.components.touch:pussyTouchService
  * @requires Zepto
  **/
-angular.module('actinium.components.touch').service('pussyTouch', [function() {
+.service('pussyTouch', [function() {
 
   /**
    * @param {Object} options

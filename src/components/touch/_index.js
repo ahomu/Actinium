@@ -4,6 +4,4 @@
  * @ngdoc module
  * @name actinium.components.touch
  **/
-angular
-  .module('actinium.components.touch', [
-  ]);
+angular.module('actinium.components.touch', []);

@@ -1,8 +1,9 @@
 'use strict';
 
+angular.module('actinium.components.ga')
 /**
  * @ngdoc directive
- * @name actinium.components.ga:gaTrackPv
+ * @name actinium.components.ga:acGaPv
  * @restrict A
  *
  * @element ANY
@@ -17,10 +18,10 @@
  * 該当要素のclickイベントをPageViewとしてGoogle Analyticsに計上します。
  *
  * ```html
- * <button ga-track-pv page="/virtual" title="Virtual PV"></button>
+ * <button ac-ga-pv page="/virtual" title="Virtual PV"></button>
  * ```
  **/
-angular.module('actinium.components.ga').directive('gaTrackPv', ['ga', function(ga) {
+.directive('acGaPv', ['ga', function(ga) {
 
   var _directive =  {
     restrict : 'A',

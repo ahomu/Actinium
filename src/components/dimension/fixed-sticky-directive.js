@@ -1,8 +1,9 @@
 'use strict';
 
+angular.module('actinium.components.dimension')
 /**
  * @ngdoc directive
- * @name actinium.components.dimension:fixedSticky
+ * @name actinium.components.dimension:acFixedSticky
  * @restrict A
  *
  * @element ANY
@@ -16,12 +17,10 @@
  * すごい昔のjQueryプラギーン移植。初期化時の絶対座標を反映しつつ、該当要素をbody直下の子要素としてfixedします。
  *
  * ```html
- * <div id="fixed-sidebar" fixed-sticky>
+ * <div id="fixed-sidebar" ac-fixed-sticky>
  * ```
  **/
-angular
-.module('actinium.components.dimension')
-.directive('fixedSticky', ['$window', '$document', function($window, $document) {
+.directive('acFixedSticky', ['$window', '$document', function($window, $document) {
 
   var _directive =  {
     restrict : 'A',

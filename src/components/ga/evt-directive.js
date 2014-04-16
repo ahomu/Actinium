@@ -1,8 +1,9 @@
 'use strict';
 
+angular.module('actinium.components.ga')
 /**
  * @ngdoc directive
- * @name actinium.components.ga:gaTrackEvent
+ * @name actinium.components.ga:acGaEvent
  * @restrict A
  *
  * @element ANY
@@ -19,10 +20,10 @@
  * 該当要素のclickイベントをEventとしてGoogle Analyticsに計上します。
  *
  * ```html
- * <button ga-track-event category="video" action="play" label="Let's Play"></button>
+ * <button ac-ga-evt category="video" action="play" label="Let's Play"></button>
  * ```
  **/
-angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', function(ga) {
+.directive('acGaEvent', ['ga', function(ga) {
 
   var _directive =  {
     restrict : 'A',

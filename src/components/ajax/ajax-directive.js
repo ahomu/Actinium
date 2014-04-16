@@ -1,8 +1,9 @@
 'use strict';
 
+angular.module('actinium.components.ajax')
 /**
  * @ngdoc directive
- * @name actinium.components.ajax:ajax
+ * @name actinium.components.ajax:acAjax
  * @restrict E
  *
  * @element ANY
@@ -25,7 +26,7 @@
  * Polymer-Ajaxに触発された
  *
  * ```html
- * <ajax
+ * <ac-ajax
  *   auto="true"
  *   handler="__noop__"
  *   response="articles"
@@ -33,9 +34,7 @@
  *   url="/api/my/article/list" />
  * ```
  **/
-angular
-.module('actinium.components.ajax')
-.directive('ajax', ['$http', 'ajax', function($http, ajax) {
+.directive('acAjax', ['$http', 'ajax', function($http, ajax) {
   var _directive =  {
     restrict : 'E',
     replace  : true,

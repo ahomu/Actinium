@@ -6,6 +6,4 @@
  *
  * TODO gaのスクリプト呼び出しもモジュール化したい
  **/
-angular
-  .module('actinium.components.ga', [
-  ]);
+angular.module('actinium.components.ga', []);

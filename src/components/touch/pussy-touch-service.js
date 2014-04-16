@@ -1,11 +1,12 @@
 'use strict';
 
+angular.module('actinium.components.touch')
 /**
  * @ngdoc service
  * @name actinium.components.touch:pussyTouchService
  * @requires Zepto
  **/
-angular.module('actinium.components.touch').service('pussyTouch', [function() {
+.service('pussyTouch', [function() {
 
   /**
    * @param {Object} options

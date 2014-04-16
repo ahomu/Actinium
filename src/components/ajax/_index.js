@@ -4,8 +4,7 @@
  * @ngdoc module
  * @name actinium.components.ajax
  **/
-angular
-.module('actinium.components.ajax', [])
+angular.module('actinium.components.ajax', [])
 /**
  * @ngdoc service
  * @name actinium.components.ajax:ajaxProvider
