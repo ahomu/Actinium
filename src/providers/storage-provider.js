@@ -4,6 +4,10 @@
  * @name actinium.providers.storage
  **/
 angular.module('actinium.providers.storage', [])
+/**
+ * @ngdoc factory
+ * @name actinium.providers.storage:storageImplements
+ **/
 .factory('storageImplements', function() {
 
   /**
@@ -57,6 +61,11 @@ angular.module('actinium.providers.storage', [])
   };
 
   return {
+    /**
+     * @param {String} identifier
+     * @param {Storage} storage
+     * @returns {actinium.providers.storage.Storage}
+     */
     create : function(identifier, storage) {
       return new Storage(identifier, storage);
     }
