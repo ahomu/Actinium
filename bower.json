@@ -1,11 +1,11 @@
 {
-  "name": "actinium",
-  "version": "0.0.0",
+  "name": "Actinium",
+  "version": "0.0.5",
+  "main": "dist/actinium.js",
   "authors": [
     "Ayumu Sato <mail@ayumusato.com>"
   ],
   "homepage": "https://github.com/ahomu/Actinium",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
