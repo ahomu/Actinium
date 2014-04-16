@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc service
- * @name actinium.components.touch:touchPressy
+ * @name actinium.components.touch:pussyTouchService
  * @requires Zepto
  **/
-angular.module('actinium.components.touch').service('touchPressy', [function() {
+angular.module('actinium.components.touch').service('pussyTouch', [function() {
 
   /**
    * @param {Object} options
    * @constructor
    */
-  var Pressy = function(options) {
+  var Pussy = function(options) {
 
     options = angular.extend({
       $el            : $(document),
@@ -45,7 +45,7 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
    * クラスを外すタイミングで 150ms 遅延させる
    * @param {Event} evt
    */
-  Pressy.prototype.btnHandler = function(evt) {
+  Pussy.prototype.btnHandler = function(evt) {
     switch(evt.type) {
       case 'touchstart':
         _addClass(evt.currentTarget);
@@ -67,7 +67,7 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
    * クラスを付けるタイミングと、外すタイミングで 150ms 遅延させる
    * @param {Event} evt
    */
-  Pressy.prototype.listHandler = function(evt) {
+  Pussy.prototype.listHandler = function(evt) {
     switch(evt.type) {
       case 'touchstart':
         clearTimeout(this.timerId);
@@ -92,7 +92,7 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
   /**
    * すべてのイベントハンドラを破棄する
    */
-  Pressy.prototype.destroy = function() {
+  Pussy.prototype.destroy = function() {
     this.$el.off(
       'touchstart touchmove touchend touchleave touchcancel',
       this.btnSelector,
@@ -126,10 +126,10 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
   return {
     /**
      * @param {Object} options
-     * @return {Pressy}
+     * @return {Pussy}
      */
     init : function(options) {
-      return new Pressy(options);
+      return new Pussy(options);
     }
   };
 
