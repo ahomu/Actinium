@@ -1,4 +1,4 @@
-/*! actinium - v0.0.3 ( 2014-04-15 ) -  */
+/*! actinium - v0.0.4 ( 2014-04-16 ) -  */
 ;(function(window) {
 
 "use strict";
@@ -44,7 +44,7 @@ angular.module('actinium.providers.bundle', [])
  **/
 angular.module('actinium.providers.config', [])
 /**
- * @ngdoc service
+ * @ngdoc provider
  * @name actinium.providers.config:configProvider
  **/
 .provider('config', function() {
@@ -56,6 +56,106 @@ angular.module('actinium.providers.config', [])
 
   this.init = function(_config) {
     angular.copy(_config, data);
+  };
+
+});
+
+/**
+ * @ngdoc module
+ * @name actinium.providers.storage
+ **/
+angular.module('actinium.providers.storage', [])
+.factory('storageImplements', function() {
+
+  /**
+   * @param {String} identifier
+   * @param {Storage} storage
+   * @constructor
+   */
+  function Storage(identifier, storage) {
+    this.identifier = identifier;
+    this.storage    = storage;
+    this.data       = angular.fromJson(storage.getItem(identifier) || '{}') || {};
+  }
+
+  /**
+   * @param {String} key
+   * @param {*} val
+   */
+  Storage.prototype.set = function(key, val) {
+    this.data[key] = val;
+    this.storage.setItem(this.identifier, angular.toJson(this.data));
+  };
+
+  /**
+   * @param {String} key
+   */
+  Storage.prototype.get = function(key) {
+    return this.data[key];
+  };
+
+  /**
+   * @param {String} key
+   * @return {Boolean}
+   */
+  Storage.prototype.exists = function(key) {
+    return key in this.data;
+  };
+
+  /**
+   * @param {String} key
+   */
+  Storage.prototype.remove = function(key) {
+    delete this.data[key];
+    this.storage.setItem(this.identifier, angular.toJson(this.data));
+  };
+
+  /**
+   *
+   */
+  Storage.prototype.clearAll = function() {
+    this.storage.setItem(this.identifier, angular.toJson(this.data = {}));
+  };
+
+  return {
+    create : function(identifier, storage) {
+      return new Storage(identifier, storage);
+    }
+  };
+})
+/**
+ * @ngdoc provider
+ * @name actinium.providers.storage:localStorageProvider
+ * @requires $window
+ * @requires actinium.providers.storage:storageImplements
+ **/
+.provider('localStorage', function() {
+  var identifier = 'actinium';
+
+  this.$get = ['$window', 'storageImplements', function($window, storageImplements) {
+    return storageImplements.create(identifier, $window.localStorage);
+  }];
+
+  this.setIdentifier = function(key) {
+    identifier = key;
+  };
+
+})
+/**
+ * @ngdoc provider
+ * @name actinium.providers.storage:sessionStorageProvider
+ * @requires $window
+ * @requires actinium.providers.storage:storageImplements
+ **/
+.provider('sessionStorage', function() {
+  var identifier = 'actinium';
+
+  this.$get = ['$window', 'storageImplements', function($window, storageImplements) {
+    return storageImplements.create(identifier, $window.sessionStorage);
+  }];
+
+  this.setIdentifier = function(key) {
+    identifier = key;
   };
 
 });
@@ -106,17 +206,17 @@ angular
      */
     function ajaxRequest(config) {
 
-      console.group('Request to ' + config.url);
-      console.debug('Data', config.data);
-      console.debug('Config', config);
-      console.groupEnd();
+      
+      
+      
+      
 
       return $http(config).then(function(resp) {
 
-        console.group('Response from: ' + config.url);
-        console.debug('Status', resp.status);
-        console.debug('Body', resp.data);
-        console.groupEnd();
+        
+        
+        
+        
 
         return resp;
       });
@@ -435,7 +535,14 @@ angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', functi
   };
 
   function _link(scope, element, attrs) {
-    element.on('click', function() {
+
+    element.on('click', _event);
+
+    scope.$on('$destroy', function() {
+      element.off('click', _event);
+    });
+
+    function _event() {
       ga('send', {
         hitType       : 'event',
         eventCategory : scope.category,
@@ -443,7 +550,8 @@ angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', functi
         eventLabel    : scope.label,
         eventValue    : scope.value
       });
-    });
+    }
+
   }
 
   return _directive;
@@ -481,13 +589,20 @@ angular.module('actinium.components.ga').directive('gaTrackPv', ['ga', function(
   };
 
   function _link(scope, element, attrs) {
-    element.on('click', function() {
+
+    element.on('click', _pageview);
+
+    scope.$on('$destroy', function() {
+      element.off('click', _pageview);
+    });
+
+    function _pageview() {
       ga('send', {
         hitType : 'pageview',
         page    : scope.page,
         title   : scope.title
       });
-    });
+    }
   }
 
   return _directive;
@@ -503,16 +618,16 @@ angular
 
 /**
  * @ngdoc service
- * @name actinium.components.touch:touchPressy
+ * @name actinium.components.touch:pussyTouchService
  * @requires Zepto
  **/
-angular.module('actinium.components.touch').service('touchPressy', [function() {
+angular.module('actinium.components.touch').service('pussyTouch', [function() {
 
   /**
    * @param {Object} options
    * @constructor
    */
-  var Pressy = function(options) {
+  var Pussy = function(options) {
 
     options = angular.extend({
       $el            : $(document),
@@ -546,7 +661,7 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
    * クラスを外すタイミングで 150ms 遅延させる
    * @param {Event} evt
    */
-  Pressy.prototype.btnHandler = function(evt) {
+  Pussy.prototype.btnHandler = function(evt) {
     switch(evt.type) {
       case 'touchstart':
         _addClass(evt.currentTarget);
@@ -568,7 +683,7 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
    * クラスを付けるタイミングと、外すタイミングで 150ms 遅延させる
    * @param {Event} evt
    */
-  Pressy.prototype.listHandler = function(evt) {
+  Pussy.prototype.listHandler = function(evt) {
     switch(evt.type) {
       case 'touchstart':
         clearTimeout(this.timerId);
@@ -593,7 +708,7 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
   /**
    * すべてのイベントハンドラを破棄する
    */
-  Pressy.prototype.destroy = function() {
+  Pussy.prototype.destroy = function() {
     this.$el.off(
       'touchstart touchmove touchend touchleave touchcancel',
       this.btnSelector,
@@ -627,10 +742,10 @@ angular.module('actinium.components.touch').service('touchPressy', [function() {
   return {
     /**
      * @param {Object} options
-     * @return {Pressy}
+     * @return {Pussy}
      */
     init : function(options) {
-      return new Pressy(options);
+      return new Pussy(options);
     }
   };
 

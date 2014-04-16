@@ -32,13 +32,20 @@ angular.module('actinium.components.ga').directive('gaTrackPv', ['ga', function(
   };
 
   function _link(scope, element, attrs) {
-    element.on('click', function() {
+
+    element.on('click', _pageview);
+
+    scope.$on('$destroy', function() {
+      element.off('click', _pageview);
+    });
+
+    function _pageview() {
       ga('send', {
         hitType : 'pageview',
         page    : scope.page,
         title   : scope.title
       });
-    });
+    }
   }
 
   return _directive;

@@ -36,7 +36,14 @@ angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', functi
   };
 
   function _link(scope, element, attrs) {
-    element.on('click', function() {
+
+    element.on('click', _event);
+
+    scope.$on('$destroy', function() {
+      element.off('click', _event);
+    });
+
+    function _event() {
       ga('send', {
         hitType       : 'event',
         eventCategory : scope.category,
@@ -44,7 +51,8 @@ angular.module('actinium.components.ga').directive('gaTrackEvent', ['ga', functi
         eventLabel    : scope.label,
         eventValue    : scope.value
       });
-    });
+    }
+
   }
 
   return _directive;
