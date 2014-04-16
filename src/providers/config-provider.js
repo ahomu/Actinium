@@ -5,7 +5,7 @@
  **/
 angular.module('actinium.providers.config', [])
 /**
- * @ngdoc service
+ * @ngdoc provider
  * @name actinium.providers.config:configProvider
  **/
 .provider('config', function() {
