@@ -1,4 +1,4 @@
-/*! actinium - v0.0.5 ( 2014-04-16 ) -  */
+/*! actinium - v0.0.6 ( 2014-04-21 ) -  */
 ;(function(window) {
 
 "use strict";
@@ -183,6 +183,42 @@ angular.module('actinium.providers.storage', [])
   };
 
 });
+
+/**
+ * @ngdoc module
+ * @name actinium.providers.view-bridge
+ **/
+angular.module('actinium.providers.view-bridge', [])
+/**
+ * @ngdoc provider
+ * @name actinium.providers.view-bridge:viewBridgeProvider
+ **/
+  .provider('viewBridge', function() {
+    var data = this.data = {};
+
+    this.$get = [function() {
+      return data;
+    }];
+
+    /**
+     * @param {String} [ident]
+     */
+    this.init = function(ident) {
+      var bridgeEl;
+
+      if (ident) {
+        bridgeEl = document.getElementById(ident);
+      } else {
+        bridgeEl = document.querySelector('[type="ac/bridge"]');
+      }
+      if (!bridgeEl) {
+        throw new Error('Unexpected bridge element');
+      }
+
+      data = angular.fromJson(bridgeEl.innerHTML || '{}');
+    };
+
+  });
 
 /**
  * @ngdoc module
@@ -514,13 +550,8 @@ angular.module('actinium.components.ga')
  * @restrict A
  *
  * @element ANY
- * @param {interpolate} category
- * @param {interpolate} action
- * @param {interpolate} [label]
- * @param {interpolate} [value]
  *
  * @priority 0
- * @scope
  * @requires actinium.components.ga:ga
  *
  * @description
@@ -530,16 +561,11 @@ angular.module('actinium.components.ga')
  * <button ac-ga-evt category="video" action="play" label="Let's Play"></button>
  * ```
  **/
-.directive('acGaEvent', ['ga', function(ga) {
+.directive('acGaEvt', ['ga', function(ga) {
 
   var _directive =  {
     restrict : 'A',
-    scope    : {
-      category : '@',
-      action   : '@',
-      label    : '@',
-      value    : '@'
-    },
+    scope    : false,
     link     : _link
   };
 
@@ -554,10 +580,10 @@ angular.module('actinium.components.ga')
     function _event() {
       ga('send', {
         hitType       : 'event',
-        eventCategory : scope.category,
-        eventAction   : scope.action,
-        eventLabel    : scope.label,
-        eventValue    : scope.value
+        eventCategory : attrs.category,
+        eventAction   : attrs.action,
+        eventLabel    : attrs.label,
+        eventValue    : attrs.value
       });
     }
 
@@ -583,11 +609,8 @@ angular.module('actinium.components.ga')
  * @restrict A
  *
  * @element ANY
- * @param {interpolate} page
- * @param {interpolate} title
  *
  * @priority 0
- * @scope
  * @requires actinium.components.ga:ga
  *
  * @description
@@ -601,10 +624,7 @@ angular.module('actinium.components.ga')
 
   var _directive =  {
     restrict : 'A',
-    scope    : {
-      page  : '@',
-      title : '@'
-    },
+    scope    : false,
     link     : _link
   };
 
@@ -619,8 +639,8 @@ angular.module('actinium.components.ga')
     function _pageview() {
       ga('send', {
         hitType : 'pageview',
-        page    : scope.page,
-        title   : scope.title
+        page    : attrs.page,
+        title   : attrs.title
       });
     }
   }
