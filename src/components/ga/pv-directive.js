@@ -7,11 +7,8 @@ angular.module('actinium.components.ga')
  * @restrict A
  *
  * @element ANY
- * @param {interpolate} page
- * @param {interpolate} title
  *
  * @priority 0
- * @scope
  * @requires actinium.components.ga:ga
  *
  * @description
@@ -25,10 +22,7 @@ angular.module('actinium.components.ga')
 
   var _directive =  {
     restrict : 'A',
-    scope    : {
-      page  : '@',
-      title : '@'
-    },
+    scope    : false,
     link     : _link
   };
 
@@ -43,8 +37,8 @@ angular.module('actinium.components.ga')
     function _pageview() {
       ga('send', {
         hitType : 'pageview',
-        page    : scope.page,
-        title   : scope.title
+        page    : attrs.page,
+        title   : attrs.title
       });
     }
   }

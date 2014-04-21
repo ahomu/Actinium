@@ -7,13 +7,8 @@ angular.module('actinium.components.ga')
  * @restrict A
  *
  * @element ANY
- * @param {interpolate} category
- * @param {interpolate} action
- * @param {interpolate} [label]
- * @param {interpolate} [value]
  *
  * @priority 0
- * @scope
  * @requires actinium.components.ga:ga
  *
  * @description
@@ -23,16 +18,11 @@ angular.module('actinium.components.ga')
  * <button ac-ga-evt category="video" action="play" label="Let's Play"></button>
  * ```
  **/
-.directive('acGaEvent', ['ga', function(ga) {
+.directive('acGaEvt', ['ga', function(ga) {
 
   var _directive =  {
     restrict : 'A',
-    scope    : {
-      category : '@',
-      action   : '@',
-      label    : '@',
-      value    : '@'
-    },
+    scope    : false,
     link     : _link
   };
 
@@ -47,10 +37,10 @@ angular.module('actinium.components.ga')
     function _event() {
       ga('send', {
         hitType       : 'event',
-        eventCategory : scope.category,
-        eventAction   : scope.action,
-        eventLabel    : scope.label,
-        eventValue    : scope.value
+        eventCategory : attrs.category,
+        eventAction   : attrs.action,
+        eventLabel    : attrs.label,
+        eventValue    : attrs.value
       });
     }
 
