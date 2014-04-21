@@ -1,4 +1,4 @@
-/*! actinium - v0.0.6 ( 2014-04-21 ) -  */
+/*! actinium - v0.0.8 ( 2014-04-21 ) -  */
 ;(function(window) {
 
 "use strict";
@@ -465,11 +465,13 @@ angular.module('actinium.components.dimension')
         boxAbs         = elAbsRectPos($box[0]),
         boxAbsTop      = boxAbs.top,
         boxAbsLeft     = boxAbs.left,
+        boxHeight      = boxAbs.height,
         marginLeft     = parseInt($box.css('margin-left')) || 0,
         parentAbs      = elAbsRectPos($parent[0]),
         parentAbsLeft  = parentAbs.left,
         parentAbsDiff  = 0,
         boxLiveLeft    = boxAbsLeft - marginLeft,
+        minAbsBottom   = parseInt(attrs.minAbsBottom, 10) || 0,
         lastPoint;
 
     $window.addEventListener('scroll', watcher);
@@ -480,6 +482,7 @@ angular.module('actinium.components.dimension')
       $window.removeEventListener('resize', resizer);
     });
 
+    document.body.style.position = 'relative';
     document.body.appendChild($box[0]);
     watcher();
 
@@ -493,6 +496,7 @@ angular.module('actinium.components.dimension')
 
     function watcher() {
       var pageScroll = getPageYOffset(),
+          docHeight  = document.body.offsetHeight,
           styles;
 
       // ネガティブスクロールには反応させない(Safari5.1など)
@@ -508,6 +512,17 @@ angular.module('actinium.components.dimension')
         styles = {
           position  : 'absolute',
           top       : boxAbsTop + 'px',
+          left      : boxLiveLeft + 'px',
+          marginTop : 0
+        };
+      } else if (!!minAbsBottom && (docHeight - minAbsBottom) <=  (pageScroll + boxHeight)) {
+        if (showOnlySticky) {
+          $box.removeClass('is-invisible-rect');
+        }
+        styles = {
+          position  : 'absolute',
+          top       : null,
+          bottom    : minAbsBottom + 'px',
           left      : boxLiveLeft + 'px',
           marginTop : 0
         };

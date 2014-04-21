@@ -1,6 +1,6 @@
 {
   "name": "actinium",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "scripts": {
     "test-watch": "./node_modules/karma/bin/karma start",
     "test": "./node_modules/karma/bin/karma start --single-run"
