@@ -1,4 +1,4 @@
-/*! actinium - v0.0.8 ( 2014-04-21 ) -  */
+/*! actinium - v0.0.9 ( 2014-04-22 ) -  */
 ;(function(window) {
 
 "use strict";
@@ -567,7 +567,6 @@ angular.module('actinium.components.ga')
  * @element ANY
  *
  * @priority 0
- * @requires actinium.components.ga:ga
  *
  * @description
  * 該当要素のclickイベントをEventとしてGoogle Analyticsに計上します。
@@ -576,7 +575,7 @@ angular.module('actinium.components.ga')
  * <button ac-ga-evt category="video" action="play" label="Let's Play"></button>
  * ```
  **/
-.directive('acGaEvt', ['ga', function(ga) {
+.directive('acGaEvt', ['$window', function($window) {
 
   var _directive =  {
     restrict : 'A',
@@ -593,7 +592,7 @@ angular.module('actinium.components.ga')
     });
 
     function _event() {
-      ga('send', {
+      $window[$window.GoogleAnalyticsObject]('send', {
         hitType       : 'event',
         eventCategory : attrs.category,
         eventAction   : attrs.action,
@@ -609,16 +608,6 @@ angular.module('actinium.components.ga')
 
 angular.module('actinium.components.ga')
 /**
- * @ngdoc service
- * @name actinium.components.ga:ga
- * @requires $window
- **/
-.service('ga', ['$window', function($window) {
-  return $window[$window.GoogleAnalyticsObject];
-}]);
-
-angular.module('actinium.components.ga')
-/**
  * @ngdoc directive
  * @name actinium.components.ga:acGaPv
  * @restrict A
@@ -626,7 +615,6 @@ angular.module('actinium.components.ga')
  * @element ANY
  *
  * @priority 0
- * @requires actinium.components.ga:ga
  *
  * @description
  * 該当要素のclickイベントをPageViewとしてGoogle Analyticsに計上します。
@@ -635,7 +623,7 @@ angular.module('actinium.components.ga')
  * <button ac-ga-pv page="/virtual" title="Virtual PV"></button>
  * ```
  **/
-.directive('acGaPv', ['ga', function(ga) {
+.directive('acGaPv', ['$window', function($window) {
 
   var _directive =  {
     restrict : 'A',
@@ -652,7 +640,7 @@ angular.module('actinium.components.ga')
     });
 
     function _pageview() {
-      ga('send', {
+      $window[$window.GoogleAnalyticsObject]('send', {
         hitType : 'pageview',
         page    : attrs.page,
         title   : attrs.title

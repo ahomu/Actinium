@@ -9,7 +9,6 @@ angular.module('actinium.components.ga')
  * @element ANY
  *
  * @priority 0
- * @requires actinium.components.ga:ga
  *
  * @description
  * 該当要素のclickイベントをEventとしてGoogle Analyticsに計上します。
@@ -18,7 +17,7 @@ angular.module('actinium.components.ga')
  * <button ac-ga-evt category="video" action="play" label="Let's Play"></button>
  * ```
  **/
-.directive('acGaEvt', ['ga', function(ga) {
+.directive('acGaEvt', ['$window', function($window) {
 
   var _directive =  {
     restrict : 'A',
@@ -35,7 +34,7 @@ angular.module('actinium.components.ga')
     });
 
     function _event() {
-      ga('send', {
+      $window[$window.GoogleAnalyticsObject]('send', {
         hitType       : 'event',
         eventCategory : attrs.category,
         eventAction   : attrs.action,

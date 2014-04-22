@@ -9,7 +9,6 @@ angular.module('actinium.components.ga')
  * @element ANY
  *
  * @priority 0
- * @requires actinium.components.ga:ga
  *
  * @description
  * 該当要素のclickイベントをPageViewとしてGoogle Analyticsに計上します。
@@ -18,7 +17,7 @@ angular.module('actinium.components.ga')
  * <button ac-ga-pv page="/virtual" title="Virtual PV"></button>
  * ```
  **/
-.directive('acGaPv', ['ga', function(ga) {
+.directive('acGaPv', ['$window', function($window) {
 
   var _directive =  {
     restrict : 'A',
@@ -35,7 +34,7 @@ angular.module('actinium.components.ga')
     });
 
     function _pageview() {
-      ga('send', {
+      $window[$window.GoogleAnalyticsObject]('send', {
         hitType : 'pageview',
         page    : attrs.page,
         title   : attrs.title
