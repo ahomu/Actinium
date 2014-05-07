@@ -76,14 +76,14 @@ angular.module('actinium.components.ajax')
         }
       }
 
-      ajax.jsonp(config).then(function(resp, status) {
+      ajax.jsonp(config).success(function(resp, status) {
         if ('response' in attrs) {
           scope.response = resp;
         }
         if (angular.isFunction(scope.success)) {
           scope.success(resp, status);
         }
-      }).catch(function(err) {
+      }).error(function(err) {
         if (angular.isFunction(scope.error)) {
           scope.error(err);
         }

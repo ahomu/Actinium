@@ -47,7 +47,7 @@ angular.module('actinium.components.touch')
    * @param {Event} evt
    */
   Pussy.prototype.btnHandler = function(evt) {
-    switch(evt.type) {
+    switch (evt.type) {
       case 'touchstart':
         _addClass(evt.currentTarget);
         break;
@@ -69,7 +69,7 @@ angular.module('actinium.components.touch')
    * @param {Event} evt
    */
   Pussy.prototype.listHandler = function(evt) {
-    switch(evt.type) {
+    switch (evt.type) {
       case 'touchstart':
         clearTimeout(this.timerId);
         this.timerId = setTimeout(function() {
@@ -111,7 +111,7 @@ angular.module('actinium.components.touch')
    * @private
    */
   function _addClass(elm) {
-    if(elm.className.indexOf('is-pressed') === -1) {
+    if (elm.className.indexOf('is-pressed') === -1) {
       elm.className += ' is-pressed';
     }
   }

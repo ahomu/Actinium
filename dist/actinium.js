@@ -1,4 +1,4 @@
-/*! actinium - v0.0.9 ( 2014-04-22 ) -  */
+/*! actinium - v0.0.10 ( 2014-05-07 ) -  */
 ;(function(window) {
 
 "use strict";
@@ -365,14 +365,14 @@ angular.module('actinium.components.ajax')
         }
       }
 
-      ajax.jsonp(config).then(function(resp, status) {
+      ajax.jsonp(config).success(function(resp, status) {
         if ('response' in attrs) {
           scope.response = resp;
         }
         if (angular.isFunction(scope.success)) {
           scope.success(resp, status);
         }
-      }).catch(function(err) {
+      }).error(function(err) {
         if (angular.isFunction(scope.error)) {
           scope.error(err);
         }
@@ -704,7 +704,7 @@ angular.module('actinium.components.touch')
    * @param {Event} evt
    */
   Pussy.prototype.btnHandler = function(evt) {
-    switch(evt.type) {
+    switch (evt.type) {
       case 'touchstart':
         _addClass(evt.currentTarget);
         break;
@@ -726,7 +726,7 @@ angular.module('actinium.components.touch')
    * @param {Event} evt
    */
   Pussy.prototype.listHandler = function(evt) {
-    switch(evt.type) {
+    switch (evt.type) {
       case 'touchstart':
         clearTimeout(this.timerId);
         this.timerId = setTimeout(function() {
@@ -768,7 +768,7 @@ angular.module('actinium.components.touch')
    * @private
    */
   function _addClass(elm) {
-    if(elm.className.indexOf('is-pressed') === -1) {
+    if (elm.className.indexOf('is-pressed') === -1) {
       elm.className += ' is-pressed';
     }
   }
