@@ -18,7 +18,7 @@ angular.module('actinium.providers.storage', [])
   function Storage(identifier, storage) {
     this.identifier = identifier;
     this.storage    = storage;
-    this.data       = angular.fromJson(storage.getItem(identifier) || '{}') || {};
+    this.data       = angular.fromJson(storage[identifier] || '{}') || {};
   }
 
   /**
@@ -27,7 +27,7 @@ angular.module('actinium.providers.storage', [])
    */
   Storage.prototype.set = function(key, val) {
     this.data[key] = val;
-    this.storage.setItem(this.identifier, angular.toJson(this.data));
+    this.storage[this.identifier] = angular.toJson(this.data);
   };
 
   /**
@@ -50,14 +50,14 @@ angular.module('actinium.providers.storage', [])
    */
   Storage.prototype.remove = function(key) {
     delete this.data[key];
-    this.storage.setItem(this.identifier, angular.toJson(this.data));
+    this.storage[this.identifier] = angular.toJson(this.data);
   };
 
   /**
    *
    */
   Storage.prototype.clearAll = function() {
-    this.storage.setItem(this.identifier, angular.toJson(this.data = {}));
+    this.storage[this.identifier] = angular.toJson(this.data = {});
   };
 
   return {
@@ -79,9 +79,14 @@ angular.module('actinium.providers.storage', [])
  **/
 .provider('localStorage', function() {
   var identifier = 'actinium';
-
   this.$get = ['$window', 'storageImplements', function($window, storageImplements) {
-    return storageImplements.create(identifier, $window.localStorage);
+    var storage;
+    try {
+      storage = $window.localStorage;
+    } catch (e) {
+      storage = {};
+    }
+    return storageImplements.create(identifier, storage);
   }];
 
   this.setIdentifier = function(key) {
@@ -99,7 +104,13 @@ angular.module('actinium.providers.storage', [])
   var identifier = 'actinium';
 
   this.$get = ['$window', 'storageImplements', function($window, storageImplements) {
-    return storageImplements.create(identifier, $window.sessionStorage);
+    var storage;
+    try {
+      storage = $window.sessionStorage;
+    } catch (e) {
+      storage = {};
+    }
+    return storageImplements.create(identifier, storage);
   }];
 
   this.setIdentifier = function(key) {

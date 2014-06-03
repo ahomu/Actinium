@@ -1,6 +1,5 @@
 {
   "name": "Actinium",
-  "version": "0.0.10",
   "main": "dist/actinium.js",
   "authors": [
     "Ayumu Sato <mail@ayumusato.com>"
